@@ -114,14 +114,53 @@ cd ecommerce-system
 
 ### 🔹 2. Setup Database
 
+#### Step 1: Create Database
+
+Open MySQL and run:
+
 ```sql
 CREATE DATABASE ecommerce_db;
 USE ecommerce_db;
 ```
 
+---
+
+#### Step 2: Import Schema
+
+Run the SQL file:
+
+##### Option A: Using MySQL CLI
+
 ```bash
-source database.sql;
+mysql -u root -p ecommerce_db < database.sql
 ```
+
+##### Option B: Using MySQL Workbench (Import File)
+
+1. Open MySQL Workbench
+2. Select `ecommerce_db`
+3. Go to **File → Open SQL Script**
+4. Open `database.sql`
+5. Click **Execute (⚡)**
+
+##### Option C: Copy & Paste
+
+1. Open MySQL Workbench
+2. Select `ecommerce_db`
+3. Copy contents of `database.sql`
+4. Paste into query editor
+5. Click **Execute (⚡)**
+
+---
+
+#### After Setup
+
+Verify tables:
+
+```sql
+SHOW TABLES;
+```
+
 
 ---
 
