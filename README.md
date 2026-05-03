@@ -1,10 +1,25 @@
-# E-Commerce Management System
+# E-Commerce Management System (MySQL + Flask + Tkinter)
 
-A full-stack database project that demonstrates **CRUD operations** using both a **Desktop GUI (Tkinter)** and a **Web Dashboard (Flask)** powered by a **MySQL database**.
+![Python](https://img.shields.io/badge/Python-3.8+-blue)
+![Flask](https://img.shields.io/badge/Flask-WebApp-green)
+![MySQL](https://img.shields.io/badge/Database-MySQL-orange)
+![License](https://img.shields.io/badge/License-MIT-lightgrey)
+
+> Originally developed as a **Database Lab Project**, this system was extended with a **Flask web interface** and a **Tkinter desktop application** to demonstrate complete end-to-end functionality.
 
 ---
 
-## Features
+## 🔥 Highlights
+
+* Dual Interface System (**Web + Desktop**)
+* Full CRUD Operations (Create, Read, Update, Delete)
+* Advanced SQL JOIN Reporting
+* Clean UI with structured navigation
+* Real-time data updates
+
+---
+
+## 🚀 Features
 
 ### 🔹 Database (MySQL)
 
@@ -22,32 +37,26 @@ A full-stack database project that demonstrates **CRUD operations** using both a
 
 ### 🔹 Desktop Application (Tkinter)
 
-* Modern tab-based UI
-* Full CRUD operations:
-
-  * Create
-  * Read
-  * Update
-  * Delete
-* Table-wise data management
-* Form-based data entry
-* Real-time refresh
+* Modern tab-based UI with interactive table view
+* Form-based data entry and editing
+* Full CRUD operations
+* Real-time refresh of data
 
 ---
 
 ### 🔹 Web Application (Flask)
 
 * Clean tab-based dashboard
-* Displays all tables
+* Displays all database tables
 * Advanced **JOIN Report**
 * Summary analytics:
 
-  * Total orders
+  * Total orders per user
   * Total spending per user
 
 ---
 
-## Tech Stack
+## 🧱 Tech Stack
 
 | Layer       | Technology     |
 | ----------- | -------------- |
@@ -58,7 +67,19 @@ A full-stack database project that demonstrates **CRUD operations** using both a
 
 ---
 
-## Project Structure
+## 📸 Screenshots
+
+### 🔹 Web Dashboard
+
+![Web Dashboard](screenshots/web.png)
+
+### 🔹 Desktop Application
+
+![Desktop GUI](screenshots/gui.png)
+
+---
+
+## 📂 Project Structure
 
 ```bash
 project/
@@ -67,34 +88,31 @@ project/
 ├── gui.py              # Tkinter CRUD application
 ├── templates/
 │   └── index.html      # Web dashboard UI
-├── database.sql        # Schema + insert values
+├── database.sql        # Schema + sample data
+├── requirements.txt
+├── .env.example
 └── README.md
 ```
 
 ---
 
-## Setup Instructions
+## ⚙️ Setup Instructions
 
 ### 🔹 1. Clone Repository
 
 ```bash
-git clone https://github.com/your-username/ecommerce-db-project.git
-cd ecommerce-db-project
+git clone https://github.com/NAVEENKUMAR-T/ecommerce-tkinter-flask.git
+cd ecommerce-tkinter-flask
 ```
 
 ---
 
 ### 🔹 2. Setup Database
 
-1. Open MySQL
-2. Run:
-
 ```sql
 CREATE DATABASE ecommerce_db;
 USE ecommerce_db;
 ```
-
-3. Import schema:
 
 ```bash
 source database.sql;
@@ -102,23 +120,52 @@ source database.sql;
 
 ---
 
-### 🔹 3. Install Dependencies
+### 🔹 3. Setup Virtual Environment (Recommended)
 
-You can install all required packages at once:
+```bash
+python -m venv venv
+
+# Windows
+venv\Scripts\activate
+
+# Mac/Linux
+source venv/bin/activate
+```
+
+---
+
+### 🔹 4. Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Alternatively, install them manually:
+---
 
-```bash
-pip install flask mysql-connector-python python-dotenv
+## 📦 Requirements
+
+```
+flask
+mysql-connector-python
+python-dotenv
 ```
 
 ---
 
-### 🔹 4. Run Flask App
+### 🔹 5. Configure Environment Variables
+
+Create a `.env` file in the root directory:
+
+```
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=your_password
+DB_NAME=ecommerce_db
+```
+
+---
+
+### 🔹 6. Run Flask Web App
 
 ```bash
 python app.py
@@ -132,7 +179,7 @@ http://127.0.0.1:5000/
 
 ---
 
-### 🔹 5. Run Desktop GUI
+### 🔹 7. Run Desktop GUI
 
 ```bash
 python gui.py
@@ -140,7 +187,7 @@ python gui.py
 
 ---
 
-## Key SQL Query (JOIN Report)
+## 📊 Key SQL Query (JOIN Report)
 
 ```sql
 SELECT 
@@ -163,7 +210,7 @@ JOIN payments pay ON o.order_id = pay.order_id;
 
 ---
 
-## Output Example
+## 📈 Output Example
 
 | User | Product    | Qty | Item Total | Order Total |
 | ---- | ---------- | --- | ---------- | ----------- |
@@ -172,7 +219,7 @@ JOIN payments pay ON o.order_id = pay.order_id;
 
 ---
 
-## Learning Outcomes
+## 🎯 Learning Outcomes
 
 * Database normalization
 * SQL JOIN operations
@@ -183,7 +230,7 @@ JOIN payments pay ON o.order_id = pay.order_id;
 
 ---
 
-## Architecture
+## 🧠 Architecture
 
 ```
 Tkinter GUI   ─┐
@@ -193,29 +240,29 @@ Flask Web App ─┘
 
 ---
 
-## Author
+## 👨‍💻 Author
 
 **NAVEENKUMAR T**
 
 ---
 
-## Notes
+## 📌 Notes
 
-* Make sure MySQL is running
-* Update DB credentials in code if needed
+* Ensure MySQL server is running
+* Update database credentials in `.env`
 * Compatible with Python 3.8+
 
 ---
 
-## Future Improvements
+## 🚀 Future Improvements
 
-*  Authentication system
-*  Data visualization (charts)
-*  API integration
-*  Responsive frontend
+* Authentication system (Login/Register)
+* Data visualization (charts & graphs)
+* REST API integration
+* Responsive frontend UI
 
 ---
 
-## License
+## 📜 License
 
-This project is for academic and educational purposes.
+This project is licensed under the [MIT License](LICENSE).
