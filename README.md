@@ -67,15 +67,20 @@
 
 ---
 
+## 📊 ER Diagram
+
+![ER Diagram](images/er-diagram.png)
+
+---
 ## 📸 Screenshots
 
 ### 🔹 Web Dashboard
 
-![Web Dashboard](screenshots/web.png)
+![Web Dashboard](images/web.png)
 
 ### 🔹 Desktop Application
 
-![Desktop GUI](screenshots/gui.png)
+![Desktop GUI](images/gui.png)
 
 ---
 
