@@ -106,8 +106,8 @@ project/
 ### 🔹 1. Clone Repository
 
 ```bash
-git clone https://github.com/NAVEENKUMAR-T/ecommerce-tkinter-flask.git
-cd ecommerce-tkinter-flask
+git clone https://github.com/NAVEENKUMAR-T-GIT-28/ecommerce-system.git
+cd ecommerce-system
 ```
 
 ---
