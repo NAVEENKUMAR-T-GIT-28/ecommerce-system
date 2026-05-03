@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-Commerce Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f4f4;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .tabs {
+            display: flex;
+            background: #333;
+        }
+
+        .tabs button {
+            flex: 1;
+            padding: 10px;
+            color: white;
+            background: #333;
+            border: none;
+            cursor: pointer;
+        }
+
+        .tabs button:hover {
+            background: #555;
+        }
+
+        .tabs button.active {
+            background: #007bff;
+            font-weight: bold;
+        }
+
+        .tabcontent {
+            display: none;
+            padding: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            background: white;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background: #222;
+            color: white;
+        }
+
+        /* DataTables Custom Styling */
+        .dataTables_wrapper {
+            margin-top: 10px;
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        /* Welcome Screen Styling */
+        .welcome-screen {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+        .welcome-screen h3 { color: #333; margin-bottom: 20px; }
+        .welcome-screen p { color: #666; font-size: 1.1em; line-height: 1.6; }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .stat-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 5px solid #333;
+        }
+        .stat-card h4 { margin: 0; color: #555; }
+        .stat-card span { font-size: 2em; font-weight: bold; color: #222; }
+    </style>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
+    <!-- jQuery -->
+    <script type="text/javascript" charset="utf8" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <!-- DataTables JS -->
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+
+    <script>
+        function openTab(tabName) {
+            let i, tabs, buttons;
+            
+            // Hide all tab content
+            tabs = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabs.length; i++) {
+                tabs[i].style.display = "none";
+            }
+            
+            // Remove "active" class from all buttons
+            buttons = document.querySelectorAll(".tabs button");
+            for (i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove("active");
+            }
+            
+            // Show the current tab and add "active" class to the button that opened it
+            document.getElementById(tabName).style.display = "block";
+            
+            // Find the button by its onclick attribute or text and add active class
+            buttons.forEach(btn => {
+                if (btn.getAttribute('onclick').includes(tabName)) {
+                    btn.classList.add("active");
+                }
+            });
+            
+            // Recalculate DataTables layout
+            setTimeout(function() {
+                $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+            }, 10);
+        }
+
+        $(document).ready(function() {
+            $('table').DataTable({
+                "pageLength": 10,
+                "responsive": true
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    <h2>E-Commerce Dashboard</h2>
+
+    <div class="tabs">
+        <button class="active" onclick="openTab('welcome')">Home</button>
+        <button onclick="openTab('users')">Users</button>
+        <button onclick="openTab('products')">Products</button>
+        <button onclick="openTab('orders')">Orders</button>
+        <button onclick="openTab('order_items')">Order Items</button>
+        <button onclick="openTab('payments')">Payments</button>
+        <button onclick="openTab('join')">Report</button>
+        <button onclick="openTab('summary')">Summary</button>
+    </div>
+
+    <!-- WELCOME -->
+    <div id="welcome" class="tabcontent" style="display: block;">
+        <div class="welcome-screen">
+            <h3>Welcome to the E-Commerce Dashboard</h3>
+            <p>Select a tab above to manage your data, view detailed reports, and analyze business performance.</p>
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <h4>Total Users</h4>
+                    <span>{{ data.users|length }}</span>
+                </div>
+                <div class="stat-card">
+                    <h4>Products</h4>
+                    <span>{{ data.products|length }}</span>
+                </div>
+                <div class="stat-card">
+                    <h4>Orders</h4>
+                    <span>{{ data.orders|length }}</span>
+                </div>
+                <div class="stat-card">
+                    <h4>Total Revenue</h4>
+                    <span>₹{{ data.payments|sum(attribute='amount')|round(2) }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- USERS -->
+    <div id="users" class="tabcontent">
+        <table style="width:100%">
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Full Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Role</th>
+            </tr>
+            {% for r in data.users %}
+            <tr>
+                <td>{{r.user_id}}</td>
+                <td>{{r.username}}</td>
+                <td>{{r.full_name}}</td>
+                <td>{{r.email}}</td>
+                <td>{{r.phone}}</td>
+                <td>{{r.role}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- PRODUCTS -->
+    <div id="products" class="tabcontent">
+        <table style="width:100%">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+            </tr>
+            {% for r in data.products %}
+            <tr>
+                <td>{{r.product_id}}</td>
+                <td>{{r.name}}</td>
+                <td>{{r.category}}</td>
+                <td>{{r.price}}</td>
+                <td>{{r.stock}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- ORDERS -->
+    <div id="orders" class="tabcontent">
+        <table style="width:100%">
+            <tr>
+                <th>ID</th>
+                <th>User ID</th>
+                <th>Date</th>
+                <th>Status</th>
+            </tr>
+            {% for r in data.orders %}
+            <tr>
+                <td>{{r.order_id}}</td>
+                <td>{{r.user_id}}</td>
+                <td>{{r.order_date}}</td>
+                <td>{{r.status}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- ORDER ITEMS -->
+    <div id="order_items" class="tabcontent">
+        <table style="width:100%">
+            <tr>
+                <th>ID</th>
+                <th>Order ID</th>
+                <th>Product ID</th>
+                <th>Quantity</th>
+            </tr>
+            {% for r in data.order_items %}
+            <tr>
+                <td>{{r.item_id}}</td>
+                <td>{{r.order_id}}</td>
+                <td>{{r.product_id}}</td>
+                <td>{{r.quantity}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- PAYMENTS -->
+    <div id="payments" class="tabcontent">
+        <table style="width:100%">
+            <tr>
+                <th>ID</th>
+                <th>Order ID</th>
+                <th>Amount</th>
+                <th>Method</th>
+                <th>Status</th>
+                <th>Paid At</th>
+            </tr>
+            {% for r in data.payments %}
+            <tr>
+                <td>{{r.payment_id}}</td>
+                <td>{{r.order_id}}</td>
+                <td>{{r.amount}}</td>
+                <td>{{r.method}}</td>
+                <td>{{r.status}}</td>
+                <td>{{r.paid_at}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- JOIN REPORT -->
+    <div id="join" class="tabcontent">
+        <table style="width:100%">
+            <tr>
+                <th>User</th>
+                <th>Order</th>
+                <th>Product</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Item Total</th>
+                <th>Order Total</th>
+                <th>Status</th>
+                <th>Method</th>
+                <th>Time</th>
+            </tr>
+            {% for r in data.join %}
+            <tr>
+                <td>{{r.username}}</td>
+                <td>{{r.order_id}}</td>
+                <td>{{r.product_name}}</td>
+                <td>{{r.quantity}}</td>
+                <td>{{r.price}}</td>
+                <td>{{r.item_total}}</td>
+                <td>{{r.order_total}}</td>
+                <td>{{r.status}}</td>
+                <td>{{r.method}}</td>
+                <td>{{r.paid_at}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- SUMMARY REPORT -->
+    <div id="summary" class="tabcontent">
+        <table style="width:100%">
+            <tr>
+                <th>User</th>
+                <th>Total Orders</th>
+                <th>Total Spent</th>
+            </tr>
+            {% for r in data.summary %}
+            <tr>
+                <td>{{r.username}}</td>
+                <td>{{r.total_orders}}</td>
+                <td>{{r.total_spent}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+</html>
